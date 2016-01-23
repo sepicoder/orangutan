@@ -1,70 +1,37 @@
 const fs = require("fs");
 const weatherwax = require("./weatherwax.js");
+const banana = require("./banana.js");
 
-var processArray = function(items, process) {
-  var todo = items.concat();
-
-  if (todo.length > 0) {
-    setTimeout(function() {
-      process(todo.shift());
-      if(todo.length > 0) {
-        setTimeout(arguments.callee, 25);
-      }
-    }, 25);
-  }
-};
+const rulesDir = "./conformityRules/";
 
 module.exports = (function() {
   var ready = false;
   var conformityRules = {};
   var queuedConformityChecks = [];
 
-  fs.readFile('abbreviations/journals.json', function(error, data) {
-    if (error) {
-      console.error("Error reading the file abbreviations/journals.json. Message was: ", error);
-      throw error;
+  fs.readdir(rulesDir, function(error, files) {
+    var granny = weatherwax(function() {
+      ready = true;
+
+      banana.processArray(queuedConformityChecks, function(item) {
+        checkConformity.apply(this, item);
+      });
+    });
+
+    for (var i=0; i<files.length; i++) {
+      var file = files[i];
+
+      fs.readFile(rulesDir + file, granny(function(error, data) {
+        if (error) {
+          console.error("Error reading the file abbreviations/journals.json. Message was: ", error);
+          throw error;
+        }
+
+        banana.mergeInto(JSON.parse(data), conformityRules);
+      }));
     }
 
-    conformityRules = {
-      article: {
-        author: {
-          required: true
-        },
-        title: {
-          required: true
-        },
-        journal: {
-          required: true
-        },
-        year: {
-          required: true
-        },
-        volume: {
-          required: false
-        },
-        number: {
-          required: false
-        },
-        pages: {
-          required: false
-        },
-        month: {
-          required: false
-        },
-        note: {
-          required: false
-        },
-        key: {
-          required: false
-        }
-      }
-    };
-
-    ready = true;
-
-    processArray(queuedConformityChecks, function(item) {
-      checkConformity.apply(this, item);
-    });
+    granny.run();
   });
 
   var checkConformity = function(entry, callback) {
