@@ -7,7 +7,6 @@ module.exports = (function() {
   var checkerInstance = function(entryTag, callback) {
     var checker = {};
     var wordCount = 0;
-    var correctCount = 0;
     var misspellingCount = 0;
     var line = 0;
     var misspellings = [];
@@ -24,9 +23,7 @@ module.exports = (function() {
       var type = result.type;
       wordCount++;
 
-      if (type === "ok") {
-        correctCount++;
-      } else if (type === "misspelling") {
+      if (type === "misspelling") {
         misspellingCount++;
         misspellings[line].push(result);
       } else if (type === "comment" && traceMode) {
@@ -35,9 +32,10 @@ module.exports = (function() {
         console.log(result.line);
         console.log("*********************");
       } else if (type === "line-break") {
+        line++;
       } else if (type === "unknown") {
         console.log("*********************");
-        console.log("Umknown");
+        console.log("Unknown");
         console.log(result);
         console.log("*********************");
       }
@@ -45,7 +43,6 @@ module.exports = (function() {
     var getStatus = function() {
       return {
         wordCount: wordCount,
-        correctCount: correctCount,
         misspellingCount: misspellingCount,
         misspellings: misspellings
       };
@@ -74,6 +71,7 @@ module.exports = (function() {
 
     var entryTags = entry.entryTags;
     for (var tag in entryTags) {
+      if (tag === "year") continue;
       checkerInstance(entryTags[tag], entryTagCallback(tag));
     }
 

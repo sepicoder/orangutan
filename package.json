@@ -7,16 +7,17 @@
     "test": "tests"
   },
   "dependencies": {
-    "aspell": "^0.1.0",
+    "aspell": "rohdef/node-aspell"
+  },
+  "devDependencies": {
     "jasmine": "^2.3.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "node runTests.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rohdef/node-games.git"
+    "url": "https://github.com/rohdef/orangutan"
   },
   "keywords": [
     "bibtex",
@@ -26,9 +27,5 @@
     "checks"
   ],
   "author": "Rohde Fischer <rohdef@rohdef.dk> (http://rohdef.dk/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/rohdef/node-games/issues"
-  },
-  "homepage": "https://github.com/rohdef/node-games"
+  "license": "MIT"
 }
