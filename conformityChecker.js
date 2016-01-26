@@ -41,6 +41,8 @@ module.exports = (function() {
     var orangutan = {};
 
     var ruleset = conformityRules[entry.entryType];
+    console.log(entry);
+    console.log(ruleset);
     if (ruleset) {
       ruleset = JSON.parse(JSON.stringify(ruleset));
 
@@ -49,10 +51,8 @@ module.exports = (function() {
         if (!ruleset[tag]) {
           orangutan[tag].specificationConformance = "Unspecified field";
         } else if (ruleset[tag].required) {
-          orangutan[tag].specificationConformance = "OK";
           delete ruleset[tag];
         } else {
-          orangutan[tag].specificationConformance = "OK";
           delete ruleset[tag];
         }
       }

@@ -11,7 +11,7 @@
     "bibtex-parse-js": "rohdef/bibtexParseJs"
   },
   "devDependencies": {
-    "jasmine": "^2.3.2"
+    "jasmine": "=2.4.0"
   },
   "scripts": {
     "test": "node runTests.js"

@@ -2,6 +2,7 @@
  "abbreviations"
  (lambda ()
    (LaTeX-add-bibitems
+    "abbreviation_no_abbreviation"
     "klopperdop"
     "jelly_baby"
     "jelly_bean"

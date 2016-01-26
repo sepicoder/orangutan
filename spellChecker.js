@@ -63,9 +63,11 @@ module.exports = (function() {
 
     var entryTagCallback = function(entryTag) {
       return granny(function(status) {
-        orangutan[entryTag] = {
-          spelling: status
-        };
+        if (status.misspellingCount > 0) {
+          orangutan[entryTag] = {
+            spelling: status
+          };
+        }
       });
     };
 

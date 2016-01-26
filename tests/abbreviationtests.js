@@ -39,4 +39,22 @@ describe("When searching for abbreviations it", function() {
       done();
     });
   });
+
+  it("should not insert the tag if there's nothing there", function() {
+    orangutan.parse(bibtexData, function(parsedBibtex) {
+      var abbreviations = lipwig.find(parsedBibtex, "abbreviation_no_abbreviation")
+            .orangutan;
+
+      expect(orangutan.author)
+        .not.toBeDefined();
+      expect(orangutan.title)
+        .not.toBeDefined();
+      expect(orangutan.publisher)
+        .not.toBeDefined();
+      expect(orangutan.year)
+        .not.toBeDefined();
+
+      done();
+    });
+  });
 });
