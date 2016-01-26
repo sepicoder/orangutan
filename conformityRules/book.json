@@ -11,6 +11,27 @@
     },
     "year": {
       "required": true
+    },
+    "volume": {
+      "required": false
+    },
+    "series": {
+      "required": false
+    },
+    "address": {
+      "required": false
+    },
+    "edition": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+    "note": {
+      "required": false
+    },
+    "key": {
+      "required": false
     }
   }
 }

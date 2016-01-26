@@ -68,6 +68,19 @@ describe("When searching for spelling errors", function() {
     });
   });
 
+  it("does not have a spelling tag if no erros is found", function(done) {
+    orangutan.parse(bibtexData, function(parsedBibtex) {
+      var orangutan = lipwig.find(parsedBibtex, "correct_spelling")
+            .orangutan;
+      var spell = orangutan.title.spelling;
+      expect(spell).not.toBeDefined();
+
+      done();
+    });
+  });
+
+  /**
+   * Test abanoned for now, french titles is not important
   xit("should not detect spelling errors in the French title of The Little Prince", function(done) {
     orangutan.parse(bibtexData, function(parsedBibtex) {
       var orangutan = lipwig.find(parsedBibtex, "la_petite")
@@ -79,4 +92,5 @@ describe("When searching for spelling errors", function() {
       done();
     });
   });
+   */
 });
