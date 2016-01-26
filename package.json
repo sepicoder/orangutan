@@ -7,7 +7,8 @@
     "test": "tests"
   },
   "dependencies": {
-    "aspell": "rohdef/node-aspell"
+    "aspell": "rohdef/node-aspell",
+    "bibtex-parse-js": "rohdef/bibtexParseJs"
   },
   "devDependencies": {
     "jasmine": "^2.3.2"

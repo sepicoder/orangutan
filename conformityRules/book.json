@@ -1,0 +1,16 @@
+{
+  "book": {
+    "author": {
+      "required": true
+    },
+    "title": {
+      "required": true
+    },
+    "publisher": {
+      "required": true
+    },
+    "year": {
+      "required": true
+    }
+  }
+}
