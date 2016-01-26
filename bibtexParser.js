@@ -1,5 +1,5 @@
 const spellChecker = require("./spellChecker.js");
-const parser = require("bibtex-parser-js");
+const parser = require("bibtex-parse-js");
 const weatherwax = require("./weatherwax.js");
 const banana = require("./banana.js");
 const abbreviationChecker = require("./abbreviationChecker.js");
