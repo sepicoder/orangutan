@@ -353,62 +353,35 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         });
       });
 
-      it("should flag unknown tags", function(done) {
-        orangutan.parse(bibtexData, function(parsedBibtex) {
-          var orangutan = find(parsedBibtex, "article_unknown_tags").orangutan;
-
-          expect(orangutan.ministry.specificationConformance)
-            .toEqual("Unspecified field");
-          expect(orangutan.friend.specificationConformance)
-            .toEqual("Unspecified field");
-
-          done();
-        });
-      });
-
       xit("should detect optional fields", function(done) {
         orangutan.parse(bibtexData, function(parsedBibtex) {
-          var orangutan = find(parsedBibtex, "article_complete").orangutan;
+          var orangutan = find(parsedBibtex, "book_complete_author").orangutan;
           expect(orangutan.volume.specificationConformance)
             .not.toBeDefined();
-          expect(orangutan.number.specificationConformance)
+          expect(orangutan.series.specificationConformance)
             .not.toBeDefined();
-          expect(orangutan.pages.specificationConformance)
-            .toEqual("OK");
+          expect(orangutan.address.specificationConformance)
+            .not.toBeDefined();
+          expect(orangutan.edition.specificationConformance)
+            .not.toBeDefined();
           expect(orangutan.month.specificationConformance)
-            .toEqual("OK");
+            .not.toBeDefined();
           expect(orangutan.note.specificationConformance)
-            .toEqual("OK");
+            .not.toBeDefined();
           expect(orangutan.key.specificationConformance)
-            .toEqual("OK");
+            .not.toBeDefined();
 
-          orangutan = find(parsedBibtex, "article_missing_title").orangutan;
-          expect(orangutan.number.specificationConformance)
-            .toEqual("OK");
-          expect(orangutan.pages.specificationConformance)
-            .toEqual("OK");
-          expect(orangutan.key.specificationConformance)
-            .toEqual("OK");
-
-          orangutan = find(parsedBibtex, "article_missing_journal").orangutan;
-          expect(orangutan.volume.specificationConformance)
-            .toEqual("OK");
-          expect(orangutan.number.specificationConformance)
-            .toEqual("OK");
+          orangutan = find(parsedBibtex, "book_missing_title").orangutan;
+          expect(orangutan.address.specificationConformance)
+            .not.toBeDefined();
+          expect(orangutan.edition.specificationConformance)
+            .not.toBeDefined();
           expect(orangutan.note.specificationConformance)
-            .toEqual("OK");
-          expect(orangutan.key.specificationConformance)
-            .toEqual("OK");
+            .not.toBeDefined();
 
-          orangutan = find(parsedBibtex, "article_missing_all").orangutan;
-          expect(orangutan.volume.specificationConformance)
-            .toEqual("OK");
-          expect(orangutan.number.specificationConformance)
-            .toEqual("OK");
-          expect(orangutan.pages.specificationConformance)
-            .toEqual("OK");
-          expect(orangutan.month.specificationConformance)
-            .toEqual("OK");
+          orangutan = find(parsedBibtex, "book_missing_publisher").orangutan;
+          expect(orangutan.series.specificationConformance)
+            .not.toBeDefined();
 
           done();
         });
@@ -450,13 +423,13 @@ describe("When checking for the comformity of the BibTeX specification,", functi
 
           orangutan = find(parsedBibtex, "article_missing_all").orangutan;
           expect(orangutan.volume.specificationConformance)
-            .toEqual("OK");
+            .not.toBeDefined();
           expect(orangutan.number.specificationConformance)
-            .toEqual("OK");
+            .not.toBeDefined();
           expect(orangutan.pages.specificationConformance)
-            .toEqual("OK");
+            .not.toBeDefined();
           expect(orangutan.month.specificationConformance)
-            .toEqual("OK");
+            .not.toBeDefined();
 
           done();
         });
