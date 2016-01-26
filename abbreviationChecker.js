@@ -1,6 +1,8 @@
 const fs = require("fs");
+const path = require("path");
 const weatherwax = require("./weatherwax.js");
 const banana = require("./banana.js");
+const directory = path.dirname(fs.realpathSync(__filename));
 
 module.exports = (function() {
 
@@ -10,7 +12,8 @@ module.exports = (function() {
   };
   var queuedShortningChecks = [];
 
-  fs.readFile('abbreviations/journals.json', function(error, data) {
+  var jsonPath = path.join(directory, 'abbreviations/journals.json');
+  fs.readFile(jsonPath, function(error, data) {
     if (error) {
       console.error("Error reading the file abbreviations/journals.json. Message was: ", error);
       throw error;

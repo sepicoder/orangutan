@@ -1,8 +1,10 @@
 const fs = require("fs");
+const path = require("path");
 const weatherwax = require("./weatherwax.js");
 const banana = require("./banana.js");
+const directory = path.dirname(fs.realpathSync(__filename));
 
-const rulesDir = "./conformityRules/";
+const rulesDir = path.join(directory, "conformityRules");
 
 module.exports = (function() {
   var ready = false;
@@ -21,7 +23,8 @@ module.exports = (function() {
     for (var i=0; i<files.length; i++) {
       var file = files[i];
 
-      fs.readFile(rulesDir + file, granny(function(error, data) {
+      var filePath = path.join(rulesDir, file);
+      fs.readFile(filePath, granny(function(error, data) {
         if (error) {
           console.error("Error reading the file abbreviations/journals.json. Message was: ", error);
           throw error;
