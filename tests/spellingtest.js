@@ -72,8 +72,7 @@ describe("When searching for spelling errors", function() {
     orangutan.parse(bibtexData, function(parsedBibtex) {
       var orangutan = lipwig.find(parsedBibtex, "correct_spelling")
             .orangutan;
-      var spell = orangutan.title.spelling;
-      expect(spell).not.toBeDefined();
+      expect(orangutan.title).not.toBeDefined();
 
       done();
     });

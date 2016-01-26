@@ -72,10 +72,9 @@ module.exports = (function() {
     };
 
     var entryTags = entry.entryTags;
-    for (var tag in entryTags) {
-      if (tag === "year") continue;
-      checkerInstance(entryTags[tag], entryTagCallback(tag));
-    }
+
+    if (entryTags["title"])
+      checkerInstance(entryTags["title"], entryTagCallback("title"));
 
     granny.run();
   };

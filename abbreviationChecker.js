@@ -89,11 +89,13 @@ module.exports = (function() {
       });
 
       for (var tag in entry.entryTags) {
-        orangutan[tag] = {};
-
         var cb = (function(tag) {
           return granny(function(abbreviations) {
-            orangutan[tag].abbreviations = abbreviations;
+            if (abbreviations.abbreviation.length > 0) {
+              orangutan[tag] = {
+                abbreviations: abbreviations
+              };
+            }
           });
         })(tag);
 
