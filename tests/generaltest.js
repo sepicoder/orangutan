@@ -88,5 +88,21 @@ describe("When running the bibtex parser it", function() {
         done();
       });
     });
+
+    it("to garbage, it should add an error for it", function(done) {
+      orangutan.parse(bibtexOverrides, false, function(parsedBibtex) {
+        var badOverride = lipwig.find(parsedBibtex, "bad_override");
+
+        expect(badOverride).toBeDefined();
+        expect(badOverride.orangutan).toBeDefined();
+
+        var optorangutan = badOverride.orangutan.optorangutan;
+        expect(optorangutan).toBeDefined();
+        expect(optorangutan.override).toBeDefined();
+        expect(optorangutan.override).toBe("Invalid override tag: [IJ]");
+
+        done();
+      });
+    });
   });
 });

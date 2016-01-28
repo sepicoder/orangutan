@@ -19,9 +19,15 @@ module.exports = {
   doParsing: function(entry, strings, callback) {
     var orangutan = {};
 
-    if (entry.entryTags.OPTOrangutan) {
-      callback(orangutan);
-      return;
+    if (entry.entryTags.optorangutan) {
+      if (entry.entryTags.optorangutan.toLowerCase() === "ok") {
+        callback(orangutan);
+        return;
+      } else {
+        orangutan.optorangutan = {
+          override: "Invalid override tag: [" + entry.entryTags.optorangutan + "]"
+        };
+      }
     }
 
     const granny = weatherwax(function() {
