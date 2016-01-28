@@ -4,7 +4,7 @@ const orangutan = require("../bibtexParser.js");
 const weatherwax = require("../weatherwax.js");
 
 describe("When running the bibtex parser it", function() {
-  var bibtexData, bibtexCleanData;
+  var bibtexData, bibtexCleanData, bibtexOverrides;
 
   beforeAll(function(done) {
     var granny = weatherwax(done);
@@ -15,6 +15,10 @@ describe("When running the bibtex parser it", function() {
 
     fs.readFile("./bibtex-tests/general-clean-test.bib", granny(function(error, data) {
       bibtexCleanData = data.toString();
+    }));
+
+    fs.readFile("./bibtex-tests/general-overrides.bib", granny(function(error, data) {
+      bibtexOverrides = data.toString();
     }));
 
     granny.run();
@@ -57,6 +61,29 @@ describe("When running the bibtex parser it", function() {
     it("should return a false if no errors was found", function(done) {
       orangutan.parse(bibtexCleanData, false, function(parsedBibtex) {
         expect(parsedBibtex).toBe(false);
+
+        done();
+      });
+    });
+  });
+
+  describe("when setting OPTOrangutan", function() {
+    it("to OK, it should unconditionally accept the input", function(done) {
+      orangutan.parse(bibtexOverrides, false, function(parsedBibtex) {
+        expect(lipwig.find(parsedBibtex, "article_missing_two")).toBeDefined();
+        expect(lipwig.find(parsedBibtex, "article_missing_two_override")).toBe(false);
+
+        expect(lipwig.find(parsedBibtex, "article_missing_all")).toBeDefined();
+        expect(lipwig.find(parsedBibtex, "article_missing_all_override")).toBe(false);
+
+        expect(lipwig.find(parsedBibtex, "abbreviation_potato")).toBeDefined();
+        expect(lipwig.find(parsedBibtex, "abbreviation_potato_override")).toBe(false);
+
+        expect(lipwig.find(parsedBibtex, "abbreviation_airborne")).toBeDefined();
+        expect(lipwig.find(parsedBibtex, "abbreviation_airborne_override")).toBe(false);
+
+        expect(lipwig.find(parsedBibtex, "misspelling")).toBeDefined();
+        expect(lipwig.find(parsedBibtex, "misspelling_override")).toBe(false);
 
         done();
       });

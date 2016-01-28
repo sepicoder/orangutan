@@ -19,6 +19,11 @@ module.exports = {
   doParsing: function(entry, strings, callback) {
     var orangutan = {};
 
+    if (entry.entryTags.OPTOrangutan) {
+      callback(orangutan);
+      return;
+    }
+
     const granny = weatherwax(function() {
       callback(orangutan);
     });
