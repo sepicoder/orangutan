@@ -249,18 +249,18 @@ describe("When checking for the comformity of the BibTeX specification,", functi
      * Required fields: author or editor, title, publisher, year
      * Optional fields: volume, series, address, edition, month, note, key
      */
-    xdescribe("a book", function() {
+    describe("a book", function() {
       xit("should detect an missing author", function(done) {
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "book_missing_author").orangutan;
 
           expect(orangutan.author.specificationConformance)
             .toEqual("Field is missing");
-          expect(orangutan.title.specificationConformance)
+          expect(orangutan.title)
             .not.toBeDefined();
-          expect(orangutan.publisher.specificationConformance)
+          expect(orangutan.publisher)
             .not.toBeDefined();
-          expect(orangutan.year.specificationConformance)
+          expect(orangutan.year)
             .not.toBeDefined();
 
           done();
@@ -272,13 +272,13 @@ describe("When checking for the comformity of the BibTeX specification,", functi
           var mt = find(parsedBibtex, "book_missing_title");
           var orangutan = mt.orangutan;
 
-          expect(orangutan.author.specificationConformance)
+          expect(orangutan.author)
             .not.toBeDefined();
           expect(orangutan.title.specificationConformance)
             .toEqual("Field is missing");
-          expect(orangutan.publisher.specificationConformance)
+          expect(orangutan.publisher)
             .not.toBeDefined();
-          expect(orangutan.year.specificationConformance)
+          expect(orangutan.year)
             .not.toBeDefined();
 
           done();
@@ -289,13 +289,13 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "book_missing_publisher").orangutan;
 
-          expect(orangutan.author.specificationConformance)
+          expect(orangutan.author)
             .not.toBeDefined();
-          expect(orangutan.title.specificationConformance)
+          expect(orangutan.title)
             .not.toBeDefined();
           expect(orangutan.publisher.specificationConformance)
            .toEqual("Field is missing");
-          expect(orangutan.year.specificationConformance)
+          expect(orangutan.year)
            .not.toBeDefined();
 
           done();
@@ -306,11 +306,11 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "book_missing_year").orangutan;
 
-          expect(orangutan.author.specificationConformance)
+          expect(orangutan.author)
             .not.toBeDefined();
-          expect(orangutan.title.specificationConformance)
+          expect(orangutan.title)
             .not.toBeDefined();
-          expect(orangutan.publisher.specificationConformance)
+          expect(orangutan.publisher)
             .not.toBeDefined();
           expect(orangutan.year.specificationConformance)
             .toEqual("Field is missing");
@@ -323,13 +323,14 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "book_mandatory_only_author").orangutan;
 
-          expect(orangutan.author.specificationConformance)
+          expect(orangutan.author)
             .not.toBeDefined();
+          // Note the spell checker discovers one here
           expect(orangutan.title.specificationConformance)
             .not.toBeDefined();
-          expect(orangutan.publisher.specificationConformance)
+          expect(orangutan.publisher)
             .not.toBeDefined();
-          expect(orangutan.year.specificationConformance)
+          expect(orangutan.year)
             .not.toBeDefined();
 
           done();
@@ -340,14 +341,27 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "book_missing_two").orangutan;
 
-          expect(orangutan.author.specificationConformance)
+          expect(orangutan.author)
             .not.toBeDefined();
           expect(orangutan.title.specificationConformance)
             .toEqual("Field is missing");
           expect(orangutan.publisher.specificationConformance)
             .toEqual("Field is missing");
-          expect(orangutan.year.specificationConformance)
+          expect(orangutan.year)
             .not.toBeDefined();
+
+          done();
+        });
+      });
+
+      it("should flag unknown tags", function(done) {
+        orangutan.parse(bibtexData, function(parsedBibtex) {
+          var orangutan = find(parsedBibtex, "article_unknown_tags").orangutan;
+
+          expect(orangutan.ministry.specificationConformance)
+            .toEqual("Unspecified field");
+          expect(orangutan.friend.specificationConformance)
+            .toEqual("Unspecified field");
 
           done();
         });
@@ -356,31 +370,31 @@ describe("When checking for the comformity of the BibTeX specification,", functi
       xit("should detect optional fields", function(done) {
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "book_complete_author").orangutan;
-          expect(orangutan.volume.specificationConformance)
+          expect(orangutan.volume)
             .not.toBeDefined();
-          expect(orangutan.series.specificationConformance)
+          expect(orangutan.series)
             .not.toBeDefined();
-          expect(orangutan.address.specificationConformance)
+          expect(orangutan.address)
             .not.toBeDefined();
-          expect(orangutan.edition.specificationConformance)
+          expect(orangutan.edition)
             .not.toBeDefined();
-          expect(orangutan.month.specificationConformance)
+          expect(orangutan.month)
             .not.toBeDefined();
-          expect(orangutan.note.specificationConformance)
+          expect(orangutan.note)
             .not.toBeDefined();
-          expect(orangutan.key.specificationConformance)
+          expect(orangutan.key)
             .not.toBeDefined();
 
           orangutan = find(parsedBibtex, "book_missing_title").orangutan;
-          expect(orangutan.address.specificationConformance)
+          expect(orangutan.address)
             .not.toBeDefined();
-          expect(orangutan.edition.specificationConformance)
+          expect(orangutan.edition)
             .not.toBeDefined();
-          expect(orangutan.note.specificationConformance)
+          expect(orangutan.note)
             .not.toBeDefined();
 
           orangutan = find(parsedBibtex, "book_missing_publisher").orangutan;
-          expect(orangutan.series.specificationConformance)
+          expect(orangutan.series)
             .not.toBeDefined();
 
           done();
@@ -422,13 +436,13 @@ describe("When checking for the comformity of the BibTeX specification,", functi
             .not.toBeDefined();
 
           orangutan = find(parsedBibtex, "article_missing_all").orangutan;
-          expect(orangutan.volume.specificationConformance)
+          expect(orangutan.volume)
             .not.toBeDefined();
-          expect(orangutan.number.specificationConformance)
+          expect(orangutan.number)
             .not.toBeDefined();
-          expect(orangutan.pages.specificationConformance)
+          expect(orangutan.pages)
             .not.toBeDefined();
-          expect(orangutan.month.specificationConformance)
+          expect(orangutan.month)
             .not.toBeDefined();
 
           done();

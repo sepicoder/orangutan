@@ -8,7 +8,17 @@ module.exports = (function() {
     return false;
   };
 
+  var wrapFunction = function(fun) {
+    var me = this;
+    var args =  Array.prototype.slice.call(arguments, 1);
+
+    return function() {
+      fun.apply(me, args);
+    };
+  };
+
   return {
-    find: find
+    find: find,
+    wrapFunction: wrapFunction
   };
 })();

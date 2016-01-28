@@ -33,6 +33,12 @@ module.exports = {
   },
 
   parse: function(bibtex, callback) {
+    if (arguments.length < 2) {
+      throw new RangeError("To few arguments given, should at least be a string with bibtex and a callback");
+    } else if (arguments.length > 3) {
+      throw new RangeError("To many arguments given, should at most be a string with bibtex, if it should keep the entries and a callback");
+    }
+
     try {
       const parsedBibTeX = parser.toJSON(bibtex);
 
