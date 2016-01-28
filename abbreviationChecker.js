@@ -46,7 +46,8 @@ module.exports = (function() {
       if (shortnings[shortning]) {
         abbreviations.abbreviation.push(shortning);
 
-        if (!abbreviations.suggestions[shortning])
+        if (!abbreviations.suggestions[shortning] ||
+           !(abbreviations.suggestions[shortning] instanceof Array))
           abbreviations.suggestions[shortning] = [];
 
         abbreviations.suggestions[shortning] = abbreviations.suggestions[shortning].concat(shortnings[shortning]);

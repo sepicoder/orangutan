@@ -1,5 +1,6 @@
 const fs = require("fs");
 const orangutan = require("../bibtexParser.js");
+const abbreviationChecker = require("../abbreviationChecker.js");
 const lipwig = require("./lipwig.js");
 
 describe("When searching for abbreviations it", function() {
@@ -55,6 +56,34 @@ describe("When searching for abbreviations it", function() {
         .not.toBeDefined();
 
       done();
+    });
+  });
+
+  describe("should not crash on", function() {
+    it("JavaScript built constructor", function(done) {
+      var entry = {
+        entryTags: {
+          journal: 'constructor'
+        }
+      };
+
+      abbreviationChecker.checkAbbreviations(entry, {}, false, function() {
+        expect(true).toBe(true);
+        done();
+      });
+    });
+
+    it("JavaScript built __proto__", function(done) {
+      var entry = {
+        entryTags: {
+          journal: '__proto__'
+        }
+      };
+
+      abbreviationChecker.checkAbbreviations(entry, {}, false, function() {
+        expect(true).toBe(true);
+        done();
+      });
     });
   });
 });
