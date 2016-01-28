@@ -1,17 +1,23 @@
 const fs = require("fs");
 const lipwig = require("./lipwig.js");
 const orangutan = require("../bibtexParser.js");
+const weatherwax = require("../weatherwax.js");
 
 describe("When running the bibtex parser it", function() {
-  var bibtexData;
+  var bibtexData, bibtexCleanData;
 
   beforeAll(function(done) {
-/*    fs.readFile("./bibtex-tests/generaltest.bib", function(error, data) {
+    var granny = weatherwax(done);
+
+    fs.readFile("./bibtex-tests/general-test.bib", granny(function(error, data) {
       bibtexData = data.toString();
-      done();
-    });
- */
-    done();
+    }));
+
+    fs.readFile("./bibtex-tests/general-clean-test.bib", granny(function(error, data) {
+      bibtexCleanData = data.toString();
+    }));
+
+    granny.run();
   });
 
   it("should throw RangeError on bad amounts of arguments", function() {
@@ -36,11 +42,24 @@ describe("When running the bibtex parser it", function() {
       .toThrowError(RangeError, "To many arguments given, should at most be a string with bibtex, if it should keep the entries and a callback");
   });
 
-  it("should remove entries when second argument is false", function(done) {
-    orangutan.parse(bibtexData, false, function() {
-      expect(42);
+  describe("when setting keep entries to false it", function() {
+    it("should remove correct entries", function(done) {
+      orangutan.parse(bibtexData, false, function(parsedBibtex) {
+        expect(lipwig.find(parsedBibtex, "article_clean")).toBe(false);
+        expect(lipwig.find(parsedBibtex, "article_spelling")).toBeDefined();
+        expect(lipwig.find(parsedBibtex, "article_inconsistent")).toBeDefined();
+        expect(lipwig.find(parsedBibtex, "article_abbreviation")).toBeDefined();
 
-      done();
+        done();
+      });
+    });
+
+    it("should return a false if no errors was found", function(done) {
+      orangutan.parse(bibtexCleanData, false, function(parsedBibtex) {
+        expect(parsedBibtex).toBe(false);
+
+        done();
+      });
     });
   });
 });

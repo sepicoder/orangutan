@@ -6,13 +6,17 @@ const abbreviationChecker = require("./abbreviationChecker.js");
 const conformityChecker = require("./conformityChecker.js");
 
 module.exports = {
-  createCallback: function(entry) {
+  createCallback: function(parsedBibtex, i, keepEntries) {
     return function(res) {
-      entry.orangutan = res;
+      if (Object.keys(res).length > 0 || keepEntries) {
+        parsedBibtex.entries[i].orangutan = res;
+      } else {
+        parsedBibtex.entries.splice(i, 1);
+      }
     };
   },
 
-  doParsing: function(entry, parsedBibtex, callback) {
+  doParsing: function(entry, strings, callback) {
     var orangutan = {};
 
     const granny = weatherwax(function() {
@@ -27,33 +31,47 @@ module.exports = {
 
     spellChecker.checkSpelling(entry, orangutanCallback());
     conformityChecker.checkConformity(entry, orangutanCallback());
-    abbreviationChecker.checkAbbreviations(entry, parsedBibtex.strings, false, orangutanCallback());
+    abbreviationChecker.checkAbbreviations(entry, strings, false, orangutanCallback());
 
     granny.run();
   },
 
-  parse: function(bibtex, callback) {
+  parse: function(bibtex) {
+    var callback, keepEntries;
     if (arguments.length < 2) {
       throw new RangeError("To few arguments given, should at least be a string with bibtex and a callback");
-    } else if (arguments.length > 3) {
+    } else if (arguments.length === 2) {
+      keepEntries = true;
+      callback = arguments[1];
+    } else if (arguments.length === 3) {
+      keepEntries = arguments[1];
+      callback = arguments[2];
+    } else {
       throw new RangeError("To many arguments given, should at most be a string with bibtex, if it should keep the entries and a callback");
     }
 
     try {
-      const parsedBibTeX = parser.toJSON(bibtex);
+      var parsedBibtex = parser.toJSON(bibtex);
 
       const granny = weatherwax(function() {
-        callback(parsedBibTeX);
+        if (parsedBibtex.entries.length > 0)
+          callback(parsedBibtex);
+        else
+          callback(false);
       });
+      granny.setOrdered(true);
 
-      for (var i=0; i<parsedBibTeX.entries.length; i++) {
-        var entry = parsedBibTeX.entries[i];
-        this.doParsing(entry, parsedBibTeX, granny(this.createCallback(entry)));
+      for (var i=parsedBibtex.entries.length-1; i>-1; i--) {
+        var entry = parsedBibtex.entries[i];
+        var entryCallback = granny(this.createCallback(parsedBibtex, i, keepEntries));
+        this.doParsing(entry, parsedBibtex.strings, entryCallback);
       }
 
       granny.run();
     } catch(error) {
-      console.error(error.stack);
+      console.error("Error parsing the BibTeX: " + error);
+      if (error.stack)
+        console.error(error.stack);
     }
   }
 };
