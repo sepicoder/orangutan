@@ -8,7 +8,6 @@ module.exports = (function() {
     var checker = {};
     var wordCount = 0;
     var misspellingCount = 0;
-    var line = 0;
     var misspellings = [];
     misspellings[0] = [];
 
@@ -25,14 +24,14 @@ module.exports = (function() {
 
       if (type === "misspelling") {
         misspellingCount++;
-        misspellings[line].push(result);
+        misspellings[misspellings.length-1].push(result);
       } else if (type === "comment" && traceMode) {
         console.log("*********************");
         console.log("Comment");
         console.log(result.line);
         console.log("*********************");
       } else if (type === "line-break") {
-        line++;
+        misspellings.push([]);
       } else if (type === "unknown") {
         console.log("*********************");
         console.log("Unknown");
