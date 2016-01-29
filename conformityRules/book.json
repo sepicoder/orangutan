@@ -2,7 +2,12 @@
   "book": {
     "author": {
       "required": true
+      "excludes": "editor"
     },
+    "editor": {
+      "required": true,
+      "excludes": "author"
+    }
     "title": {
       "required": true
     },

@@ -34,7 +34,11 @@ describe("When checking for the comformity of the BibTeX specification,", functi
           var orangutan = find(parsedBibtex, "article_missing_author").orangutan;
 
           expect(orangutan.author.specificationConformance)
-            .toEqual("Field is missing");
+            .toEqual({
+              description: "Field is missing",
+              code: orangutan.conformance.MISSING_FIELD,
+              alternative: "editor"
+            });
           expect(orangutan.title.specificationConformance)
             .not.toBeDefined();
           expect(orangutan.journal)
@@ -54,7 +58,10 @@ describe("When checking for the comformity of the BibTeX specification,", functi
           expect(orangutan.author)
             .not.toBeDefined();
           expect(orangutan.title.specificationConformance)
-            .toEqual("Field is missing");
+            .toEqual({
+              description: "Field is missing",
+              code: orangutan.conformance.MISSING_FIELD
+            });
           expect(orangutan.journal)
             .not.toBeDefined();
           expect(orangutan.year)
@@ -73,7 +80,10 @@ describe("When checking for the comformity of the BibTeX specification,", functi
           expect(orangutan.title)
             .not.toBeDefined();
           expect(orangutan.journal.specificationConformance)
-           .toEqual("Field is missing");
+           .toEqual({
+              description: "Field is missing",
+              code: orangutan.conformance.MISSING_FIELD
+            });
           expect(orangutan.year)
            .not.toBeDefined();
 
@@ -92,7 +102,10 @@ describe("When checking for the comformity of the BibTeX specification,", functi
           expect(orangutan.journal)
             .not.toBeDefined();
           expect(orangutan.year.specificationConformance)
-            .toEqual("Field is missing");
+            .toEqual({
+              description: "Field is missing",
+              code: orangutan.conformance.MISSING_FIELD
+            });
 
           done();
         });
@@ -124,7 +137,10 @@ describe("When checking for the comformity of the BibTeX specification,", functi
           expect(orangutan.title)
             .not.toBeDefined();
           expect(orangutan.journal.specificationConformance)
-            .toEqual("Field is missing");
+            .toEqual({
+              description: "Field is missing",
+              code: orangutan.conformance.MISSING_FIELD
+            });
           expect(orangutan.year.specificationConformance)
             .toEqual("Field is missing");
 
@@ -250,7 +266,7 @@ describe("When checking for the comformity of the BibTeX specification,", functi
      * Optional fields: volume, series, address, edition, month, note, key
      */
     describe("a book", function() {
-      xit("should detect an missing author", function(done) {
+      it("should detect an missing author", function(done) {
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "book_missing_author").orangutan;
 
@@ -367,7 +383,7 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         });
       });
 
-      xit("should detect optional fields", function(done) {
+      it("should detect optional fields", function(done) {
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "book_complete_author").orangutan;
           expect(orangutan.volume)
@@ -401,7 +417,7 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         });
       });
 
-      xit("should not do anything on missing optional fields", function(done) {
+      it("should not do anything on missing optional fields", function(done) {
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var orangutan = find(parsedBibtex, "article_mandatory_only").orangutan;
           expect(orangutan.volume)
@@ -448,15 +464,61 @@ describe("When checking for the comformity of the BibTeX specification,", functi
           done();
         });
       });
+
+      xit("should not accept author and editor in the same", function(done) {
+        orangutan.parse(bibtexData, function(parsedBibtex) {
+          var orangutan = find(parsedBibtex, "book_author_editor").orangutan;
+
+          expect(orangutan.author.specificationConformance)
+            .toBe({
+              description: "",
+              code: 3,
+              field: "editor"
+            });
+          expect(orangutan.editor.specificationConformance)
+            .toBe({
+              description: "",
+              code: 3,
+              field: "author"
+            });
+
+          orangutan = find(parsedBibtex, "book_complete_author_editor").orangutan;
+
+          done();
+        });
+      });
+
+      it("should not accept if editor is present in stead of author", function(done) {
+        orangutan.parse(bibtexData, function(parsedBibtex) {
+          var orangutan = find(parsedBibtex, "book_complete_editor").orangutan;
+
+          expect(orangutan.author)
+            .not.toBeDefined();
+          expect(orangutan.editor)
+            .not.toBeDefined();
+
+          orangutan = find(parsedBibtex, "book_mandatory_only_editor").orangutan;
+
+          expect(orangutan.author)
+            .not.toBeDefined();
+          expect(orangutan.editor)
+            .not.toBeDefined();
+
+
+          done();
+        });
+      });
     });
 
     /*
      * =======
-     * BOOKLET
+     * booklet
      * =======
-     * Required fields: title
+     * required fields: title
      * Optional fields: author, howpublished, address, month, year, note, key
      */
-    xdescribe("a booklet");
+    xdescribe("a booklet", function() {
+
+    });
   });
 });
