@@ -1,0 +1,40 @@
+{
+  "conference": {
+    "author": {
+      "required": true
+    },
+    "title": {
+      "required": true
+    },
+    "booktitle": {
+      "required": true
+    },
+    "year": {
+      "required": true
+    },
+    "editor": {
+      "required": false
+    },
+    "pages": {
+      "required": false
+    },
+    "organization": {
+      "required": false
+    },
+    "publisher": {
+      "required": false
+    },
+    "address": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+    "note": {
+      "required": false
+    },
+    "key": {
+      "required": false
+    }
+  }
+}

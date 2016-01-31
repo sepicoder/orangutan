@@ -1,0 +1,34 @@
+{
+  "techreport": {
+    "author": {
+      "required": true
+    },
+    "title": {
+      "required": true
+    },
+    "institution": {
+      "required": true
+    },
+    "year": {
+      "required": true
+    },
+    "type": {
+      "required": false
+    },
+    "number": {
+      "required": false
+    },
+    "address": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+    "note": {
+      "required": false
+    },
+    "key": {
+      "required": false
+    }
+  }
+}

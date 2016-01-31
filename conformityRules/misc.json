@@ -1,0 +1,25 @@
+{
+  "misc": {
+    "title": {
+      "required": false
+    },
+    "author": {
+      "required": false
+    },
+    "howpublished": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+    "year": {
+      "required": false
+    },
+    "note": {
+      "required": false
+    },
+    "key": {
+      "required": false
+    }
+  }
+}

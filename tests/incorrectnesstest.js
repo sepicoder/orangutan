@@ -605,5 +605,80 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         });
       });
     });
+
+    /*
+     * ======
+     * inbook
+     * ======
+     */
+    describe("an inbook", function() {
+      it("should accept the required fields with chapter present", function(done) {
+        orangutan.parse(bibtexData, function(parsedBibtex) {
+          var oran = find(parsedBibtex, false, "inbook_complete_chapter");
+
+          expect(oran).toEqual(false);
+
+          done();
+        });
+      });
+
+      it("should accept the required fields with pages present", function(done) {
+        orangutan.parse(bibtexData, function(parsedBibtex) {
+          var oran = find(parsedBibtex, "inbook_complete_pages");
+
+          expect(oran.author.specificationConformance).not.toBeDefined();
+          expect(oran.editor.specificationConformance).not.toBeDefined();
+          expect(oran.title.specificationConformance).not.toBeDefined();
+          expect(oran.chapter.specificationConformance).not.toBeDefined();
+          expect(oran.pages.specificationConformance).not.toBeDefined();
+          expect(oran.publisher.specificationConformance).not.toBeDefined();
+          expect(oran.year.specificationConformance).not.toBeDefined();
+          expect(oran.volume.specificationConformance).not.toBeDefined();
+          expect(oran.series.specificationConformance).not.toBeDefined();
+          expect(oran.address.specificationConformance).not.toBeDefined();
+          expect(oran.edition.specificationConformance).not.toBeDefined();
+          expect(oran.month.specificationConformance).not.toBeDefined();
+          expect(oran.note.specificationConformance).not.toBeDefined();
+          expect(oran.key.specificationConformance).not.toBeDefined();
+
+          done();
+        });
+      });
+
+      it("should accept the required fields with chapter and pages present", function() {
+        orangutan.parse(bibtexData, function(parsedBibtex) {
+          var oran = find(parsedBibtex, "inbook_complete_chapter_pages");
+
+          expect(oran.author).not.toBeDefined();;
+          expect(oran.title).not.toBeDefined();
+          expect(oran.chapter).not.toBeDefined();
+          expect(oran.pages).not.toBeDefined();
+
+          done();
+        });
+      });
+
+      it("should fail if both chapter and pages is missing with a notion of the alternative", function() {
+        orangutan.parse(bibtexData, function(parsedBibtex) {
+          var oran = find(parsedBibtex, "inbook_missing_chapter_pages");
+
+          expect(oran.chapter.specificationConformance).toBeDefined();
+          expect(oran.pages.specificationConformance).toBeDefined();
+
+          expect(oran.chapter.specificationConformance).toEqual({
+            description: "",
+            code: orangutan.conformanceCodes.MISSING_WITH_ALTERNATIVE_FIELD,
+            field: "pages"
+          });
+          expect(oran.pages.specificationConformance).toEqual({
+            description: "",
+            code: orangutan.conformanceCodes.MISSING_WITH_ALTERNATIVE_FIELD,
+            field: "chapter"
+          });
+
+          done();
+        });
+      });
+    });
   });
 });

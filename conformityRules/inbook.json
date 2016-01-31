@@ -1,0 +1,50 @@
+{
+  "inbook": {
+    "author": {
+      "required": true,
+      "excludes": "editor"
+    },
+    "editor": {
+      "required": true,
+      "excludes": "author"
+    },
+    "title": {
+      "required": true
+    },
+    "chapter": {
+      "required": true,
+      "aternative": "pages"
+    },
+    "pages": {
+      "required": true,
+      "aternative": "chapter"
+    },
+    "publisher": {
+      "required": true
+    },
+    "year": {
+      "required": true
+    },
+    "volume": {
+      "required": false
+    },
+    "series": {
+      "required": false
+    },
+    "address": {
+      "required": false
+    },
+    "edition": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+    "note": {
+      "required": false
+    },
+    "key": {
+      "required": false
+    }
+  }
+}

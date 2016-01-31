@@ -11,7 +11,8 @@ module.exports = (function() {
     OK: 0,
     MISSING_FIELD: 1,
     UNSPECIFIED_FIELD: 2,
-    EXCLUSIVE_FIELD: 3
+    EXCLUSIVE_FIELD: 3,
+    MISSING_WITH_ALTERNATIVE_FIELD: 4
   };
 
   var ready = false;

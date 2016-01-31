@@ -1,0 +1,23 @@
+{
+  "unpublished": {
+    "author": {
+      "required": true
+    },
+    "title": {
+      "required": true
+    },
+    "note": {
+      "required": true
+    },
+    "year": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+
+    "key": {
+      "required": false
+    }
+  }
+}

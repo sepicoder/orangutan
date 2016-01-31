@@ -186,8 +186,6 @@
 % =======
 % BOOKLET
 % =======
-% required fields: title
-% Optional fields: author, howpublished, address, month, year, note, key
 @booklet{booklet_complete,
   author = {Monty Python},
   title = {And Now For Something Completely Different},
@@ -216,4 +214,60 @@
   title = {The Neutronium Alchemist},
   publisher = {Macmillan Publishers},
   year = 1997
+}
+
+% ======
+% INBOOK
+% ======
+@inbook{inbook_complete_chapter,
+  author = {Monty Python},
+  title = {And Now For Something Completely Different},
+  chapter = 42,
+  publisher = "People's Press"
+  year = 2012,
+  volume = 1,
+  series = "Murder Ballads",
+  address = {Vestergade 58},
+  edition = 4,
+  month = 6,
+  note = {Det er en ganske god bog},
+  key = {midterste_a}
+}
+
+@inbook{inbook_complete_pages,
+  editor = {Monty Python},
+  title = {And Now For Something Completely Different},
+  pages = "11--418",
+  publisher = "People's Press"
+  year = 2012,
+  volume = 1,
+  series = "Murder Ballads",
+  address = {Vestergade 58},
+  edition = 4,
+  month = 6,
+  note = {Det er en ganske god bog},
+  key = {midterste_a}
+}
+
+@inbook{inbook_complete_chapter_pages,
+  author = {Monty Python},
+  title = {And Now For Something Completely Different},
+  chapter = 42,
+  pages = "21, 49, 413--616",
+  publisher = "People's Press"
+  year = 2012,
+  volume = 1,
+  series = "Murder Ballads",
+  address = {Vestergade 58},
+  edition = 4,
+  month = 6,
+  note = {Det er en ganske god bog},
+  key = {midterste_a}
+}
+
+@inbook{inbook_missing_chapter_pages,
+  author = {Monty Python},
+  title = {And Now For Something Completely Different},
+  publisher = "People's Press"
+  year = 2012
 }

@@ -1,0 +1,28 @@
+{
+  "phdthesis": {
+    "author": {
+      "required": true
+    },
+    "title": {
+      "required": true
+    },
+    "school": {
+      "required": true
+    },
+    "year": {
+      "required": true
+    },
+    "address": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+    "note": {
+      "required": false
+    },
+    "key": {
+      "required": false
+    }
+  }
+}

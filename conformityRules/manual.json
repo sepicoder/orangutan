@@ -1,0 +1,31 @@
+{
+  "manual": {
+    "title": {
+      "required": true
+    },
+    "author": {
+      "required": false
+    },
+    "year": {
+      "required": false
+    },
+    "organization": {
+      "required": false
+    },
+    "address": {
+      "required": false
+    },
+    "edition": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+    "note": {
+      "required": false
+    },
+    "key": {
+      "required": false
+    }
+  }
+}
