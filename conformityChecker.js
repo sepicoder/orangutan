@@ -7,6 +7,13 @@ const directory = path.dirname(fs.realpathSync(__filename));
 const rulesDir = path.join(directory, "conformityRules");
 
 module.exports = (function() {
+  const conformanceCodes = {
+    OK: 0,
+    MISSING_FIELD: 1,
+    UNSPECIFIED_FIELD: 2,
+    EXCLUSIVE_FIELD: 3
+  };
+
   var ready = false;
   var conformityRules = {};
   var queuedConformityChecks = [];
@@ -45,10 +52,29 @@ module.exports = (function() {
       ruleset = JSON.parse(JSON.stringify(ruleset));
 
       for (var tag in entry.entryTags) {
-        if (!ruleset[tag]) {
-          orangutan[tag] = {};
-          orangutan[tag].specificationConformance = "Unspecified field";
-        } else if (ruleset[tag].required) {
+        var tagRule = ruleset[tag];
+        if (!tagRule) {
+          orangutan[tag] = {
+            specificationConformance: {
+              description: "Unspecified field",
+              code: conformanceCodes.UNSPECIFIED_FIELD
+            }
+          };
+        } else if (tagRule.excludes) {
+          if (entry.entryTags[tagRule.excludes]) {
+            orangutan[tag] = {
+              specificationConformance: {
+                description: "[" + tag + "] and [" + tagRule.excludes + "] cannot be in the same entry",
+                code: conformanceCodes.EXCLUSIVE_FIELD,
+                field: tagRule.excludes
+              }
+            };
+          } else {
+            delete ruleset[tagRule.excludes];
+          }
+
+          delete ruleset[tag];
+        } else if (tagRule.required) {
           delete ruleset[tag];
         } else {
           delete ruleset[tag];
@@ -57,8 +83,16 @@ module.exports = (function() {
 
       for (tag in ruleset) {
         if (ruleset[tag].required) {
-          orangutan[tag] = {};
-          orangutan[tag].specificationConformance = "Field is missing";
+          orangutan[tag] = {
+            specificationConformance: {
+              description: "Field is missing",
+              code: conformanceCodes.MISSING_FIELD
+            }
+          };
+
+          if (ruleset[tag].excludes) {
+            orangutan[tag].specificationConformance.alternative = ruleset[tag].excludes;
+          }
         }
       }
     }
@@ -67,6 +101,8 @@ module.exports = (function() {
   };
 
   return {
+    conformanceCodes: conformanceCodes,
+
     checkConformity: function(entry, callback) {
       if (ready) {
         checkConformity(entry, callback);

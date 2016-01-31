@@ -1,0 +1,28 @@
+{
+  "booklet": {
+    "title": {
+      "required": true
+    },
+    "author": {
+      "required": false
+    },
+    "howpublished": {
+      "required": false
+    },
+    "address": {
+      "required": false
+    },
+    "month": {
+      "required": false
+    },
+    "year": {
+      "required": false
+    },
+    "note": {
+      "required": false
+    },
+    "key": {
+      "required": false
+    }
+  }
+}

@@ -1,13 +1,13 @@
 {
   "book": {
     "author": {
-      "required": true
+      "required": true,
       "excludes": "editor"
     },
     "editor": {
       "required": true,
       "excludes": "author"
-    }
+    },
     "title": {
       "required": true
     },

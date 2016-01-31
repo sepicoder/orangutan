@@ -82,8 +82,6 @@
 % ====
 % BOOK
 % ====
-%* Required fields: author or editor, title, publisher, year
-%* Optional fields: volume, series, address, edition, month, note, key
 @book{book_complete_author,
   author = {Michael Lycke},
   title = {Methusalemgenet},
@@ -179,6 +177,41 @@
 }
 
 @book{book_mandatory_only_editor,
+  editor = {Peter F. Hamilton},
+  title = {The Neutronium Alchemist},
+  publisher = {Macmillan Publishers},
+  year = 1997
+}
+
+% =======
+% BOOKLET
+% =======
+% required fields: title
+% Optional fields: author, howpublished, address, month, year, note, key
+@booklet{booklet_complete,
+  author = {Monty Python},
+  title = {And Now For Something Completely Different},
+  howpublished = {People's Press},
+  year = 2012,
+  address = {Vestergade 58},
+  month = 6,
+  note = {Det er en ganske god bog},
+  key = {midterste_a}
+}
+
+@booklet{booklet_mandatory_only,
+  title = {The Argument Clinic}
+}
+
+@booklet{booklet_missing_title,
+  author = {Michael Lycke},
+  howpublished = {People's Press},
+  year = 2012,
+  month = 6,
+  note = {Det er en ganske god bog}
+}
+
+@booklet{booklet_as_book,
   editor = {Peter F. Hamilton},
   title = {The Neutronium Alchemist},
   publisher = {Macmillan Publishers},

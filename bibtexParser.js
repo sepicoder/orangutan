@@ -6,6 +6,8 @@ const abbreviationChecker = require("./abbreviationChecker.js");
 const conformityChecker = require("./conformityChecker.js");
 
 module.exports = {
+  conformanceCodes: conformityChecker.conformanceCodes,
+
   createCallback: function(parsedBibtex, i, keepEntries) {
     return function(res) {
       if (Object.keys(res).length > 0 || keepEntries) {
