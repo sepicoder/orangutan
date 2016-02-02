@@ -68,7 +68,7 @@ describe("When running the bibtex parser it", function() {
   });
 
   describe("when setting OPTOrangutan", function() {
-    it("to OK, it should unconditionally accept the input", function(done) {
+    it("to @OK, it should unconditionally accept the input", function(done) {
       orangutan.parse(bibtexOverrides, false, function(parsedBibtex) {
         expect(lipwig.find(parsedBibtex, "article_missing_two")).toBeDefined();
         expect(lipwig.find(parsedBibtex, "article_missing_two_override")).toBe(false);

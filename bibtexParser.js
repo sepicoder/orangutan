@@ -22,7 +22,7 @@ module.exports = {
     var orangutan = {};
 
     if (entry.entryTags.optorangutan) {
-      if (entry.entryTags.optorangutan.toLowerCase() === "ok") {
+      if (entry.entryTags.optorangutan.toLowerCase() === "@ok") {
         callback(orangutan);
         return;
       } else {

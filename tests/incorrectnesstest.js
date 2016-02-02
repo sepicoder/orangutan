@@ -680,5 +680,11 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         });
       });
     });
+
+    xdescribe("When running in to OPT* fields it", function() {
+      it("should ignore them by default");
+      it("should mark them specifically marked");
+      it("should mark all except OPTorangutan if the rule is overruled");
+    });
   });
 });
