@@ -49,6 +49,7 @@ module.exports = (function() {
     var orangutan = {};
 
     var ruleset = conformityRules[entry.entryType];
+
     if (ruleset) {
       ruleset = JSON.parse(JSON.stringify(ruleset));
 
@@ -61,29 +62,39 @@ module.exports = (function() {
               code: conformanceCodes.UNSPECIFIED_FIELD
             }
           };
-        } else if (tagRule.excludes) {
-          if (entry.entryTags[tagRule.excludes]) {
-            orangutan[tag] = {
-              specificationConformance: {
-                description: "[" + tag + "] and [" + tagRule.excludes + "] cannot be in the same entry",
-                code: conformanceCodes.EXCLUSIVE_FIELD,
-                field: tagRule.excludes
-              }
-            };
-          } else {
-            delete ruleset[tagRule.excludes];
+        } else {
+          if (tagRule.excludes) {
+            if (entry.entryTags[tagRule.excludes]) {
+              orangutan[tag] = {
+                specificationConformance: {
+                  description: "[" + tag + "] and [" + tagRule.excludes + "] cannot be in the same entry",
+                  code: conformanceCodes.EXCLUSIVE_FIELD,
+                  field: tagRule.excludes
+                }
+              };
+            } else {
+              delete ruleset[tagRule.excludes];
+            }
+          } else if (tagRule.alternative) {
+            if (ruleset[tagRule.alternative]) {
+              ruleset[tagRule.alternative].required = false;
+            }
           }
 
-          delete ruleset[tag];
-        } else if (tagRule.required) {
-          delete ruleset[tag];
-        } else {
           delete ruleset[tag];
         }
       }
 
       for (tag in ruleset) {
-        if (ruleset[tag].required) {
+        if (ruleset[tag].required && ruleset[tag].alternative) {
+          orangutan[tag] = {
+            specificationConformance: {
+              description: "Field is missing with alternative option [" + ruleset[tag].alternative + "]",
+              code: conformanceCodes.MISSING_WITH_ALTERNATIVE_FIELD,
+              field: ruleset[tag].alternative
+            }
+          };
+        } else if (ruleset[tag].required) {
           orangutan[tag] = {
             specificationConformance: {
               description: "Field is missing",

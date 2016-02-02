@@ -626,26 +626,26 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var oran = find(parsedBibtex, "inbook_complete_pages");
 
-          expect(oran.author.specificationConformance).not.toBeDefined();
-          expect(oran.editor.specificationConformance).not.toBeDefined();
-          expect(oran.title.specificationConformance).not.toBeDefined();
-          expect(oran.chapter.specificationConformance).not.toBeDefined();
-          expect(oran.pages.specificationConformance).not.toBeDefined();
-          expect(oran.publisher.specificationConformance).not.toBeDefined();
-          expect(oran.year.specificationConformance).not.toBeDefined();
-          expect(oran.volume.specificationConformance).not.toBeDefined();
-          expect(oran.series.specificationConformance).not.toBeDefined();
-          expect(oran.address.specificationConformance).not.toBeDefined();
-          expect(oran.edition.specificationConformance).not.toBeDefined();
-          expect(oran.month.specificationConformance).not.toBeDefined();
-          expect(oran.note.specificationConformance).not.toBeDefined();
-          expect(oran.key.specificationConformance).not.toBeDefined();
+          expect(oran.author).not.toBeDefined();
+          expect(oran.editor).not.toBeDefined();
+          expect(oran.title).not.toBeDefined();
+          expect(oran.chapter).not.toBeDefined();
+          expect(oran.pages).not.toBeDefined();
+          expect(oran.publisher).not.toBeDefined();
+          expect(oran.year).not.toBeDefined();
+          expect(oran.volume).not.toBeDefined();
+          expect(oran.series).not.toBeDefined();
+          expect(oran.address).not.toBeDefined();
+          expect(oran.edition).not.toBeDefined();
+          expect(oran.month).not.toBeDefined();
+          expect(oran.note).not.toBeDefined();
+          expect(oran.key).not.toBeDefined();
 
           done();
         });
       });
 
-      it("should accept the required fields with chapter and pages present", function() {
+      it("should accept the required fields with chapter and pages present", function(done) {
         orangutan.parse(bibtexData, function(parsedBibtex) {
           var oran = find(parsedBibtex, "inbook_complete_chapter_pages");
 
@@ -658,20 +658,20 @@ describe("When checking for the comformity of the BibTeX specification,", functi
         });
       });
 
-      it("should fail if both chapter and pages is missing with a notion of the alternative", function() {
+      it("should fail if both chapter and pages is missing with a notion of the alternative", function(done) {
         orangutan.parse(bibtexData, function(parsedBibtex) {
-          var oran = find(parsedBibtex, "inbook_missing_chapter_pages");
+          var oran = find(parsedBibtex, "inbook_missing_chapter_pages").orangutan;
 
           expect(oran.chapter.specificationConformance).toBeDefined();
           expect(oran.pages.specificationConformance).toBeDefined();
 
           expect(oran.chapter.specificationConformance).toEqual({
-            description: "",
+            description: "Field is missing with alternative option [pages]",
             code: orangutan.conformanceCodes.MISSING_WITH_ALTERNATIVE_FIELD,
             field: "pages"
           });
           expect(oran.pages.specificationConformance).toEqual({
-            description: "",
+            description: "Field is missing with alternative option [chapter]",
             code: orangutan.conformanceCodes.MISSING_WITH_ALTERNATIVE_FIELD,
             field: "chapter"
           });

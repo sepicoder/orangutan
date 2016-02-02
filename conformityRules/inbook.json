@@ -13,11 +13,11 @@
     },
     "chapter": {
       "required": true,
-      "aternative": "pages"
+      "alternative": "pages"
     },
     "pages": {
       "required": true,
-      "aternative": "chapter"
+      "alternative": "chapter"
     },
     "publisher": {
       "required": true
