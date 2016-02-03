@@ -17,11 +17,27 @@ module.exports = (function() {
 
   var ready = false;
   var conformityRules = {};
+  var partialRules = {};
   var queuedConformityChecks = [];
 
   fs.readdir(rulesDir, function(error, files) {
     var granny = weatherwax(function() {
       ready = true;
+
+      var rulesKeys = Object.keys(conformityRules);
+      for (var item in partialRules) {
+        var partialKey = item.substr(0, item.length-1);
+        if (partialKey.indexOf("*") > -1) {
+          throw new SyntaxError("Invalid syntax for the partial rule, only rules ending with a single star is allowed. Violating rule is [" + item + "]");
+        }
+
+        for (var i=0; i<rulesKeys.length; i++) {
+          var ruleItem = rulesKeys[i];
+          if (ruleItem.substr(0, partialKey.length) === partialKey) {
+            banana.mergeInto(partialRules[item], conformityRules[ruleItem]);
+          }
+        }
+      }
 
       banana.processArray(queuedConformityChecks, function(item) {
         checkConformity.apply(this, item);
@@ -38,7 +54,18 @@ module.exports = (function() {
           throw error;
         }
 
-        banana.mergeInto(JSON.parse(data), conformityRules);
+        var rules = JSON.parse(data);
+        for (var item in rules) {
+          var ruleItem;
+          if (item.indexOf("*") > -1) {
+            console.log("Star rule found!");
+            ruleItem = (partialRules[item] || (partialRules[item] = {}));
+          } else {
+            ruleItem = (conformityRules[item] || (conformityRules[item] = {}));
+          }
+
+          banana.mergeInto(rules[item], ruleItem);
+        }
       }));
     }
 
