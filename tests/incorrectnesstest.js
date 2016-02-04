@@ -681,10 +681,38 @@ describe("When checking for the comformity of the BibTeX specification,", functi
       });
     });
 
-    xdescribe("When running in to OPT* fields it", function() {
-      it("should ignore them by default");
-      it("should mark them specifically marked");
-      it("should mark all except OPTorangutan if the rule is overruled");
+    describe("When running in to OPT* fields it", function() {
+      it("should ignore them by default", function(done) {
+        orangutan.parse(bibtexData, function(parsedBibtex) {
+          var oran = find(parsedBibtex, "conference_with_opts1").orangutan;
+
+          expect(oran.author).not.toBeDefined();
+          expect(oran.title).not.toBeDefined();
+          expect(oran.booktitle).not.toBeDefined();
+          expect(oran.year).not.toBeDefined();
+          expect(oran.optpages).not.toBeDefined();
+          expect(oran.optvolume).not.toBeDefined();
+          expect(oran.optnumber).not.toBeDefined();
+
+          oran = find(parsedBibtex, "conference_with_missing_one_opts2").orangutan;
+
+          expect(oran.author).not.toBeDefined();
+          expect(oran.title).not.toBeDefined();
+          expect(oran.booktitle.specificationConformance).toEqual({
+              description: "Field is missing",
+              code: orangutan.conformanceCodes.MISSING_FIELD
+          });
+          expect(oran.year).not.toBeDefined();
+          expect(oran.optpages).not.toBeDefined();
+          expect(oran.optmonth).not.toBeDefined();
+          expect(oran.optvolume).not.toBeDefined();
+          expect(oran.optnumber).not.toBeDefined();
+
+          done();
+        });
+      });
     });
+    xit("should mark them specifically marked");
+    xit("should mark all except OPTorangutan if the rule is overruled");
   });
 });

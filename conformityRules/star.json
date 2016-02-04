@@ -1,6 +1,6 @@
 {
   "*": {
-    "OPT*": {
+    "opt*": {
       "required": false
     }
   }

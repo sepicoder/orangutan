@@ -58,7 +58,6 @@ module.exports = (function() {
         for (var item in rules) {
           var ruleItem;
           if (item.indexOf("*") > -1) {
-            console.log("Star rule found!");
             ruleItem = (partialRules[item] || (partialRules[item] = {}));
           } else {
             ruleItem = (conformityRules[item] || (conformityRules[item] = {}));
@@ -72,6 +71,40 @@ module.exports = (function() {
     granny.run();
   });
 
+  var calculateConformity = function(entry, ruleset, tag, tagRule) {
+    var conformance = null;
+    if (!tagRule) {
+      conformance = {
+        specificationConformance: {
+          description: "Unspecified field",
+          code: conformanceCodes.UNSPECIFIED_FIELD
+        }
+      };
+    } else {
+      if (tagRule.excludes) {
+        if (entry.entryTags[tagRule.excludes]) {
+          conformance = {
+            specificationConformance: {
+              description: "[" + tag + "] and [" + tagRule.excludes + "] cannot be in the same entry",
+              code: conformanceCodes.EXCLUSIVE_FIELD,
+              field: tagRule.excludes
+            }
+          };
+        } else {
+          delete ruleset[tagRule.excludes];
+        }
+      } else if (tagRule.alternative) {
+        if (ruleset[tagRule.alternative]) {
+          ruleset[tagRule.alternative].required = false;
+        }
+      }
+
+      delete ruleset[tag];
+    }
+
+    return conformance;
+  };
+
   var checkConformity = function(entry, callback) {
     var orangutan = {};
 
@@ -79,37 +112,38 @@ module.exports = (function() {
 
     if (ruleset) {
       ruleset = JSON.parse(JSON.stringify(ruleset));
+      var ruleKeys = Object.keys(ruleset);
+      var starKeys = [];
+      for (var i=0; i<ruleKeys.length; i++) {
+        if (ruleKeys[i].indexOf("*") > -1)
+          starKeys.push(ruleKeys[i].substring(0, ruleKeys[i].length-1));
+      }
 
       for (var tag in entry.entryTags) {
         var tagRule = ruleset[tag];
+        var matched = false;
+        var conformance;
+
         if (!tagRule) {
-          orangutan[tag] = {
-            specificationConformance: {
-              description: "Unspecified field",
-              code: conformanceCodes.UNSPECIFIED_FIELD
+          for (i=0; i<starKeys.length; i++) {
+            var starKey = starKeys[i];
+            if (tag.substring(0, starKey.length) === starKey) {
+              conformance = calculateConformity(entry, ruleset, tag, ruleset[starKey + "*"]);
+              matched = true;
             }
-          };
-        } else {
-          if (tagRule.excludes) {
-            if (entry.entryTags[tagRule.excludes]) {
-              orangutan[tag] = {
-                specificationConformance: {
-                  description: "[" + tag + "] and [" + tagRule.excludes + "] cannot be in the same entry",
-                  code: conformanceCodes.EXCLUSIVE_FIELD,
-                  field: tagRule.excludes
-                }
-              };
-            } else {
-              delete ruleset[tagRule.excludes];
-            }
-          } else if (tagRule.alternative) {
-            if (ruleset[tagRule.alternative]) {
-              ruleset[tagRule.alternative].required = false;
-            }
+
+            if (conformance) break;
           }
 
-          delete ruleset[tag];
+          if (!conformance && !matched){
+            conformance = calculateConformity(entry, ruleset, tag, tagRule);
+          }
+        } else {
+          conformance = calculateConformity(entry, ruleset, tag, tagRule);
         }
+
+        if (conformance)
+          orangutan[tag] = conformance;
       }
 
       for (tag in ruleset) {
