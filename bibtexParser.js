@@ -67,10 +67,14 @@ module.exports = {
       var parsedBibtex = parser.toJSON(bibtex);
 
       const granny = weatherwax(function() {
-        if (parsedBibtex.entries.length > 0)
+        if (parsedBibtex.entries.length > 0) {
+          if (!keepEntries)
+            delete parsedBibtex["strings"];
+
           callback(parsedBibtex);
-        else
+        } else {
           callback(false);
+        }
       });
       granny.setOrdered(true);
 
