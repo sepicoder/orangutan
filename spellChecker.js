@@ -47,6 +47,8 @@ module.exports = (function() {
       };
     };
 
+    aspell.args.push("--encoding=UTF-8");
+    aspell.args.push("-t");
     aspell.args.push("-l" + lang);
     var emitter = aspell(entryTag);
     emitter.on("error", error)
@@ -80,7 +82,7 @@ module.exports = (function() {
     }
 
     if (entryTags["title"]) {
-      var entryTag = entryTags["title"].replace(/\{/g, "").replace(/\}/g, "");
+      var entryTag = entryTags["title"]; //.replace(/\{/g, "").replace(/\}/g, "");
       checkerInstance(entryTag, lang, entryTagCallback("title"));
     }
 
