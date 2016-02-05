@@ -4,7 +4,7 @@ const weatherwax = require('./weatherwax.js');
 module.exports = (function() {
   var traceMode;
 
-  var checkerInstance = function(entryTag, callback) {
+  var checkerInstance = function(entryTag, lang, callback) {
     var checker = {};
     var wordCount = 0;
     var misspellingCount = 0;
@@ -47,6 +47,7 @@ module.exports = (function() {
       };
     };
 
+    aspell.args.push("-l" + lang);
     var emitter = aspell(entryTag);
     emitter.on("error", error)
       .on("result", resultHandler)
@@ -71,10 +72,16 @@ module.exports = (function() {
     };
 
     var entryTags = entry.entryTags;
+    var lang;
+    if (entry.config.lang) {
+      lang = entry.config.lang[0];
+    } else {
+      lang = "en";
+    }
 
     if (entryTags["title"]) {
       var entryTag = entryTags["title"].replace(/\{/g, "").replace(/\}/g, "");
-      checkerInstance(entryTag, entryTagCallback("title"));
+      checkerInstance(entryTag, lang, entryTagCallback("title"));
     }
 
     granny.run();

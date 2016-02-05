@@ -88,18 +88,13 @@ describe("When searching for spelling errors", function() {
     });
   });
 
-  /**
-   * Test abanoned for now, french titles is not important
-  xit("should not detect spelling errors in the French title of The Little Prince", function(done) {
+  it("should not detect spelling errors in the French title of The Little Prince", function(done) {
     orangutan.parse(bibtexData, function(parsedBibtex) {
       var orangutan = lipwig.find(parsedBibtex, "la_petite")
             .orangutan;
-      var spell = orangutan.title.spelling;
-      var mispelling = spell.misspellings[0][0];
-      expect(spell.misspellingCount).toBe(0);
+      expect(orangutan.title).not.toBeDefined();
 
       done();
     });
   });
-   */
 });

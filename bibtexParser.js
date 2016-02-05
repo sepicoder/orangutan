@@ -8,10 +8,32 @@ const conformityChecker = require("./conformityChecker.js");
 module.exports = {
   conformanceCodes: conformityChecker.conformanceCodes,
 
+  parseConfig: function(options) {
+    var config = {};
+    var opts = options.split("@");
+
+    for (var i=0; i<opts.length; i++) {
+      var option = opts[i];
+
+      if (option) {
+        var optArgs = option.split("=");
+
+        if (optArgs.length > 1) {
+          config[optArgs[0].toLowerCase()] = optArgs[1].split(",");
+        } else {
+          config[optArgs[0].toLowerCase()] = [];
+        }
+      }
+    }
+
+    return config;
+  },
+
   createCallback: function(parsedBibtex, i, keepEntries) {
     return function(res) {
       if (Object.keys(res).length > 0 || keepEntries) {
         parsedBibtex.entries[i].orangutan = res;
+        delete parsedBibtex.entries[i].config;
       } else {
         parsedBibtex.entries.splice(i, 1);
       }
@@ -22,13 +44,9 @@ module.exports = {
     var orangutan = {};
 
     if (entry.entryTags.optorangutan) {
-      if (entry.entryTags.optorangutan.toLowerCase() === "@ok") {
+      if (entry.config.ok) {
         callback(orangutan);
         return;
-      } else {
-        orangutan.optorangutan = {
-          override: "Invalid override tag: [" + entry.entryTags.optorangutan + "]"
-        };
       }
     }
 
@@ -80,6 +98,12 @@ module.exports = {
 
       for (var i=parsedBibtex.entries.length-1; i>-1; i--) {
         var entry = parsedBibtex.entries[i];
+        if (entry.entryTags.optorangutan) {
+          entry.config = this.parseConfig(entry.entryTags.optorangutan);
+        } else {
+          entry.config = {};
+        }
+
         var entryCallback = granny(this.createCallback(parsedBibtex, i, keepEntries));
         this.doParsing(entry, parsedBibtex.strings, entryCallback);
       }
