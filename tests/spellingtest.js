@@ -78,6 +78,16 @@ describe("When searching for spelling errors", function() {
     });
   });
 
+  it("does not give spelling errors when BibTeX literals is used", function(done) {
+    orangutan.parse(bibtexData, function(parsedBibtex) {
+      var orangutan = lipwig.find(parsedBibtex, "correct_spelling_with_literals")
+            .orangutan;
+      expect(orangutan.title).not.toBeDefined();
+
+      done();
+    });
+  });
+
   /**
    * Test abanoned for now, french titles is not important
   xit("should not detect spelling errors in the French title of The Little Prince", function(done) {

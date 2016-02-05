@@ -72,8 +72,10 @@ module.exports = (function() {
 
     var entryTags = entry.entryTags;
 
-    if (entryTags["title"])
-      checkerInstance(entryTags["title"], entryTagCallback("title"));
+    if (entryTags["title"]) {
+      var entryTag = entryTags["title"].replace(/\{/g, "").replace(/\}/g, "");
+      checkerInstance(entryTag, entryTagCallback("title"));
+    }
 
     granny.run();
   };
