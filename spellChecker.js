@@ -4,6 +4,24 @@ const weatherwax = require('./weatherwax.js');
 module.exports = (function() {
   var traceMode;
 
+  var toPureText = function(entryTag) {
+    var text = "";
+
+    for (var i = 0; i<entryTag.length; i++) {
+      var part = entryTag[i];
+
+      if (part.type === "text") {
+        text += part.part;
+      } else if (part.type === "string"){
+        // Lookup string
+      } else {
+        // We're not happy
+      }
+    }
+
+    return text;
+  };
+
   var checkerInstance = function(entryTag, lang, callback) {
     var checker = {};
     var wordCount = 0;
@@ -48,6 +66,7 @@ module.exports = (function() {
     };
 
     aspell.args.push("--encoding=UTF-8");
+    aspell.args.push("--home-dir=aspell/");
     aspell.args.push("-t");
     aspell.args.push("-l" + lang);
     var emitter = aspell(entryTag);
@@ -82,8 +101,9 @@ module.exports = (function() {
     }
 
     if (entryTags["title"]) {
-      var entryTag = entryTags["title"]; //.replace(/\{/g, "").replace(/\}/g, "");
-      checkerInstance(entryTag, lang, entryTagCallback("title"));
+      var entryTag = entryTags["title"]; ;
+      var pureText = toPureText(entryTag).replace(/\{([^{}]*)\}/g, "$1");
+      checkerInstance(pureText, lang, entryTagCallback("title"));
     }
 
     granny.run();

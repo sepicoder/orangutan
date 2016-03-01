@@ -8,9 +8,27 @@ const conformityChecker = require("./conformityChecker.js");
 module.exports = {
   conformanceCodes: conformityChecker.conformanceCodes,
 
+  toPureText: function(entryTag) {
+    var text = "";
+
+    for (var i = 0; i<entryTag.length; i++) {
+      var part = entryTag[i];
+
+      if (part.type === "text") {
+        text += part.part;
+      } else if (part.type === "string"){
+        // Lookup string
+      } else {
+        // We're not happy
+      }
+    }
+
+    return text;
+  },
+
   parseConfig: function(options) {
     var config = {};
-    var opts = options.split("@");
+    var opts = this.toPureText(options).split("@");
 
     for (var i=0; i<opts.length; i++) {
       var option = opts[i];

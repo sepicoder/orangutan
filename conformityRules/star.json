@@ -1,5 +1,8 @@
 {
   "*": {
+    "crossref": {
+      "required": false
+    },
     "opt*": {
       "required": false
     }

@@ -54,18 +54,37 @@ module.exports = (function() {
       }
     };
 
-    var tokens = entryTag.split(" ");
+    var toPureText = function(entryTag) {
+      var text = "";
+
+      for (var i = 0; i<entryTag.length; i++) {
+        var part = entryTag[i];
+
+        if (part.type === "text") {
+          text += part.part;
+        } else if (part.type === "string"){
+          // Lookup string
+        } else {
+          // We're not happy
+        }
+      }
+
+      return text;
+    };
+
+    var pureText = toPureText(entryTag);
+    var tokens = pureText.split(" ");
     for (var i=0; i<tokens.length; i++) {
       var token = tokens[i].toLowerCase();
 
       checkShortning(token, shortnings.general);
     }
-    checkShortning(entryTag.toLowerCase(), shortnings.journal);
+    checkShortning(pureText.toLowerCase(), shortnings.journal);
 
     // Do deeper search, trying to find things hidden by dots etc.
     // this is likely to cause a lot of false positives (can we test that?)
     if (heusterics) {
-      var alternativeTag = entryTag.replace("-", " ");
+      var alternativeTag = pureText.replace("-", " ");
       alternativeTag = alternativeTag.replace(".", " ");
       alternativeTag = alternativeTag.replace(",", " ");
 

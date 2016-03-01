@@ -2,7 +2,7 @@ var fs = require("fs");
 var orangutan = require("../bibtexParser.js");
 var lipwig = require("./lipwig.js");
 
-describe("When searching for spelling errors", function() {
+describe("When searching for spelling errors it", function() {
   var bibtexData;
 
   beforeAll(function(done) {
