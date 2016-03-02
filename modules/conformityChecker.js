@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const weatherwax = require("../weatherwax.js");
-const banana = require("../banana.js");
+const weatherwax = require("./weatherwax.js");
+const banana = require("./banana.js");
 const directory = path.dirname(fs.realpathSync(__filename));
 
 const rulesDir = path.join(directory, "../conformityRules");

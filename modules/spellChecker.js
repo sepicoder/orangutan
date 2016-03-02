@@ -1,5 +1,5 @@
 const aspell = require('aspell');
-const weatherwax = require('../weatherwax.js');
+const weatherwax = require('./weatherwax.js');
 
 module.exports = (function() {
   var traceMode;

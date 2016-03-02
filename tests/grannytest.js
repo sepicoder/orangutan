@@ -1,4 +1,4 @@
-var weatherwax = require("../weatherwax.js");
+var weatherwax = require("../modules/weatherwax.js");
 
 describe("When taking Granny Weatherwax for a swing", function() {
   it("and setting ordered they should be called in order even when called backwards", function(done) {

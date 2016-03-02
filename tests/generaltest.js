@@ -1,7 +1,7 @@
 const fs = require("fs");
 const lipwig = require("./lipwig.js");
 const orangutan = require("../bibtexParser.js");
-const weatherwax = require("../weatherwax.js");
+const weatherwax = require("../modules/weatherwax.js");
 
 describe("When running the bibtex parser it", function() {
   var bibtexData, bibtexCleanData, bibtexOverrides;
