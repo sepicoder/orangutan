@@ -1,4 +1,43 @@
 module.exports = (function() {
+  var toPureText = function(entryTag) {
+    var text = "";
+
+    for (var i = 0; i<entryTag.length; i++) {
+      var part = entryTag[i];
+
+      if (part.type === "text") {
+        text += part.part;
+      } else if (part.type === "string"){
+        // Lookup string
+      } else {
+        // We're not happy
+      }
+    }
+
+    return text;
+  };
+
+  var parseConfig = function(options) {
+    var config = {};
+    var opts = this.toPureText(options).split("@");
+
+    for (var i=0; i<opts.length; i++) {
+      var option = opts[i];
+
+      if (option) {
+        var optArgs = option.split("=");
+
+        if (optArgs.length > 1) {
+          config[optArgs[0].toLowerCase()] = optArgs[1].split(",");
+        } else {
+          config[optArgs[0].toLowerCase()] = [];
+        }
+      }
+    }
+
+    return config;
+  };
+
   var processArray = function(items, process) {
     var todo = items.concat();
 
@@ -23,6 +62,8 @@ module.exports = (function() {
   };
 
   return {
+    toPureText: toPureText,
+    parseConfig: parseConfig,
     processArray: processArray,
     mergeInto: mergeInto
   };

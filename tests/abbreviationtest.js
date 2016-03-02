@@ -1,6 +1,6 @@
 const fs = require("fs");
 const orangutan = require("../bibtexParser.js");
-const abbreviationChecker = require("../abbreviationChecker.js");
+const abbreviationChecker = require("../modules/abbreviationChecker.js");
 const lipwig = require("./lipwig.js");
 
 describe("When searching for abbreviations it", function() {

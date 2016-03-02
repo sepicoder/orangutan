@@ -1,51 +1,12 @@
-const spellChecker = require("./spellChecker.js");
 const parser = require("bibtex-parse-js");
 const weatherwax = require("./weatherwax.js");
 const banana = require("./banana.js");
-const abbreviationChecker = require("./abbreviationChecker.js");
-const conformityChecker = require("./conformityChecker.js");
+const abbreviationChecker = require("./modules/abbreviationChecker.js");
+const conformityChecker = require("./modules/conformityChecker.js");
+const spellChecker = require("./modules/spellChecker.js");
 
 module.exports = {
   conformanceCodes: conformityChecker.conformanceCodes,
-
-  toPureText: function(entryTag) {
-    var text = "";
-
-    for (var i = 0; i<entryTag.length; i++) {
-      var part = entryTag[i];
-
-      if (part.type === "text") {
-        text += part.part;
-      } else if (part.type === "string"){
-        // Lookup string
-      } else {
-        // We're not happy
-      }
-    }
-
-    return text;
-  },
-
-  parseConfig: function(options) {
-    var config = {};
-    var opts = this.toPureText(options).split("@");
-
-    for (var i=0; i<opts.length; i++) {
-      var option = opts[i];
-
-      if (option) {
-        var optArgs = option.split("=");
-
-        if (optArgs.length > 1) {
-          config[optArgs[0].toLowerCase()] = optArgs[1].split(",");
-        } else {
-          config[optArgs[0].toLowerCase()] = [];
-        }
-      }
-    }
-
-    return config;
-  },
 
   createCallback: function(parsedBibtex, i, keepEntries) {
     return function(res) {
@@ -117,7 +78,7 @@ module.exports = {
       for (var i=parsedBibtex.entries.length-1; i>-1; i--) {
         var entry = parsedBibtex.entries[i];
         if (entry.entryTags.optorangutan) {
-          entry.config = this.parseConfig(entry.entryTags.optorangutan);
+          entry.config = banana.parseConfig(entry.entryTags.optorangutan);
         } else {
           entry.config = {};
         }
