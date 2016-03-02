@@ -19,7 +19,6 @@ if (args.length !== 2) {
   inReader.on("line", function(line) {
     var data = line.split("=");
 
-
     if (data.length !== 2){
             console.error("Error on: ", line);
     } else {
