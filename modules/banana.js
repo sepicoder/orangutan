@@ -1,25 +1,7 @@
 module.exports = (function() {
-  var toPureText = function(entryTag) {
-    var text = "";
-
-    for (var i = 0; i<entryTag.length; i++) {
-      var part = entryTag[i];
-
-      if (part.type === "text") {
-        text += part.part;
-      } else if (part.type === "string"){
-        // Lookup string
-      } else {
-        // We're not happy
-      }
-    }
-
-    return text;
-  };
-
   var parseConfig = function(options) {
     var config = {};
-    var opts = this.toPureText(options).split("@");
+    var opts = options.split("@");
 
     for (var i=0; i<opts.length; i++) {
       var option = opts[i];
@@ -62,7 +44,6 @@ module.exports = (function() {
   };
 
   return {
-    toPureText: toPureText,
     parseConfig: parseConfig,
     processArray: processArray,
     mergeInto: mergeInto

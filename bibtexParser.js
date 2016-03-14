@@ -39,7 +39,7 @@ module.exports = {
       });
     };
 
-    spellChecker.checkSpelling(entry, orangutanCallback());
+    spellChecker.checkSpelling(entry, strings, orangutanCallback());
     conformityChecker.checkConformity(entry, orangutanCallback());
     abbreviationChecker.checkAbbreviations(entry, strings, false, orangutanCallback());
 
@@ -80,7 +80,8 @@ module.exports = {
       for (var i=parsedBibtex.entries.length-1; i>-1; i--) {
         var entry = parsedBibtex.entries[i];
         if (entry.entryTags.optorangutan) {
-          entry.config = banana.parseConfig(entry.entryTags.optorangutan);
+          var optorangutan = parsedBibtex.strings.toString(entry.entryTags.optorangutan);
+          entry.config = banana.parseConfig(optorangutan);
         } else {
           entry.config = {};
         }

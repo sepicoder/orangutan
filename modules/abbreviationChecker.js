@@ -1,3 +1,4 @@
+const parser = require("bibtex-parse-js");
 const fs = require("fs");
 const path = require("path");
 const weatherwax = require("./weatherwax.js");
@@ -57,25 +58,7 @@ module.exports = (function() {
       }
     };
 
-    var toPureText = function(entryTag) {
-      var text = "";
-
-      for (var i = 0; i<entryTag.length; i++) {
-        var part = entryTag[i];
-
-        if (part.type === "text") {
-          text += part.part;
-        } else if (part.type === "string"){
-          // Lookup string
-        } else {
-          // We're not happy
-        }
-      }
-
-      return text;
-    };
-
-    var pureText = toPureText(entryTag);
+    var pureText = strings.toString(entryTag);
     var tokens = pureText.split(" ");
     for (var i=0; i<tokens.length; i++) {
       var token = tokens[i].toLowerCase();
