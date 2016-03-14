@@ -37,6 +37,9 @@
     },
     "key": {
       "required": false
+    },
+    "isbn": {
+      "required": false
     }
   }
 }

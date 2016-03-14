@@ -49,7 +49,8 @@ module.exports = {
   parse: function(bibtex) {
     var callback, keepEntries;
     if (arguments.length < 2) {
-      throw new RangeError("To few arguments given, should at least be a string with bibtex and a callback");
+      throw new RangeError("Too few arguments given, should at least be a string" +
+                           " with bibtex and a callback");
     } else if (arguments.length === 2) {
       keepEntries = true;
       callback = arguments[1];
@@ -57,7 +58,8 @@ module.exports = {
       keepEntries = arguments[1];
       callback = arguments[2];
     } else {
-      throw new RangeError("To many arguments given, should at most be a string with bibtex, if it should keep the entries and a callback");
+      throw new RangeError("Too many arguments given, should at most be a string with" +
+                           " bibtex, if it should keep the entries and a callback");
     }
 
     try {

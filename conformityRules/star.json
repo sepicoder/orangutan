@@ -5,6 +5,12 @@
     },
     "opt*": {
       "required": false
+    },
+    "doi": {
+      "required": false
+    },
+    "issn": {
+      "required": false
     }
   }
 }

@@ -26,24 +26,24 @@ describe("When running the bibtex parser it", function() {
 
   it("should throw RangeError on bad amounts of arguments", function() {
     expect(lipwig.wrapFunction(orangutan.parse))
-      .toThrowError(RangeError, "To few arguments given, should at least be a string with bibtex and a callback");
+      .toThrowError(RangeError, "Too few arguments given, should at least be a string with bibtex and a callback");
 
     expect(lipwig.wrapFunction(orangutan.parse, "foo"))
-      .toThrowError(RangeError, "To few arguments given, should at least be a string with bibtex and a callback");
+      .toThrowError(RangeError, "Too few arguments given, should at least be a string with bibtex and a callback");
 
     expect(lipwig.wrapFunction(orangutan.parse, function() {}))
-      .toThrowError(RangeError, "To few arguments given, should at least be a string with bibtex and a callback");
+      .toThrowError(RangeError, "Too few arguments given, should at least be a string with bibtex and a callback");
 
     expect(lipwig.wrapFunction(orangutan.parse, true))
-      .toThrowError(RangeError, "To few arguments given, should at least be a string with bibtex and a callback");
+      .toThrowError(RangeError, "Too few arguments given, should at least be a string with bibtex and a callback");
   });
 
   it("should accept no more than three parameters", function() {
     expect(lipwig.wrapFunction(orangutan.parse, "foo", 42, true, function() {}))
-      .toThrowError(RangeError, "To many arguments given, should at most be a string with bibtex, if it should keep the entries and a callback");
+      .toThrowError(RangeError, "Too many arguments given, should at most be a string with bibtex, if it should keep the entries and a callback");
 
     expect(lipwig.wrapFunction(orangutan.parse, "foo", "bar", "baz", 300, true, function() {}))
-      .toThrowError(RangeError, "To many arguments given, should at most be a string with bibtex, if it should keep the entries and a callback");
+      .toThrowError(RangeError, "Too many arguments given, should at most be a string with bibtex, if it should keep the entries and a callback");
   });
 
   describe("when setting keep entries to false it", function() {
