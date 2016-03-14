@@ -35,6 +35,9 @@ module.exports = (function() {
     };
 
     for (var string in strings) {
+      if (typeof shortnings[string] === "function") {
+        continue;
+      }
       if (shortnings[string])
         shortnings[string].push(strings[string]);
       else
