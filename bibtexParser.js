@@ -22,7 +22,7 @@ module.exports = {
   doParsing: function(entry, strings, callback) {
     var orangutan = {};
 
-    if (entry.entryTags.optorangutan) {
+    if (entry.entryTags.optanalyze) {
       if (entry.config.ok) {
         callback(orangutan);
         return;
@@ -79,8 +79,8 @@ module.exports = {
 
       for (var i=parsedBibtex.entries.length-1; i>-1; i--) {
         var entry = parsedBibtex.entries[i];
-        if (entry.entryTags.optorangutan) {
-          var optorangutan = parsedBibtex.strings.toString(entry.entryTags.optorangutan);
+        if (entry.entryTags.optanalyze) {
+          var optorangutan = parsedBibtex.strings.toString(entry.entryTags.optanalyze);
           entry.config = banana.parseConfig(optorangutan);
         } else {
           entry.config = {};
