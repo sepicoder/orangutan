@@ -2,6 +2,7 @@ const parser = require("bibtex-parse-js");
 const weatherwax = require("./modules/weatherwax.js");
 const banana = require("./modules/banana.js");
 const oranParser = require("./bibtexParser.js");
+const preparse = require("./modules/preparser.js");
 
 module.exports = {
   doParsing: function(entry, strings, callback) {
@@ -23,8 +24,6 @@ module.exports = {
         banana.mergeInto(result, orangutan);
       });
     };
-
-    console.log("entry");
 
     granny.run();
   },
