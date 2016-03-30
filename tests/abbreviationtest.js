@@ -29,6 +29,8 @@ describe("When searching for abbreviations it", function() {
 
   it("should detect abbreviations defined in strings", function(done) {
     orangutan.parse(bibtexData, function(parsedBibtex) {
+      var oran = lipwig.find(parsedBibtex, "jelly_baby").orangutan;
+
       var abbreviations = lipwig.find(parsedBibtex, "bar")
             .orangutan.journal.abbreviations;
 

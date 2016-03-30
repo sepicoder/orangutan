@@ -6,6 +6,9 @@
     "opt*": {
       "required": false
     },
+    "oldforum": {
+      "required": false
+    },
     "doi": {
       "required": false
     },

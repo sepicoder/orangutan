@@ -12,7 +12,8 @@ module.exports = (function() {
     MISSING_FIELD: 1,
     UNSPECIFIED_FIELD: 2,
     EXCLUSIVE_FIELD: 3,
-    MISSING_WITH_ALTERNATIVE_FIELD: 4
+    MISSING_WITH_ALTERNATIVE_FIELD: 4,
+    UNKNOWN_ENTRY_TYPE: 5
   };
 
   var ready = false;
@@ -168,6 +169,11 @@ module.exports = (function() {
           }
         }
       }
+    } else {
+      orangutan.specificationConformance = {
+              description: "Unknown entry type",
+              code: conformanceCodes.UNKNOWN_ENTRY_TYPE
+      };
     }
 
     callback(orangutan);
