@@ -19,10 +19,10 @@ describe("When searching for spelling errors it", function() {
       var spell = orangutan.title.spelling;
 
       expect(spell.misspellingCount).toBe(1);
-      var mispelling = spell.misspellings[0][0];
-      expect(mispelling.word).toBe("Algoritm");
-      expect(mispelling.position).toBe(10);
-      expect(mispelling.alternatives.length).toBeGreaterThan(0);
+      var misspelling = spell.misspellings[0][0];
+      expect(misspelling.word).toBe("Algoritm");
+      expect(misspelling.position).toBe(10);
+      expect(misspelling.alternatives.length).toBeGreaterThan(0);
 
       done();
     });
@@ -33,8 +33,8 @@ describe("When searching for spelling errors it", function() {
       var orangutan = lipwig.find(parsedBibtex, "ao_2005")
             .orangutan;
       var spell = orangutan.title.spelling;
-      var mispelling = spell.misspellings[0][0];
-      expect(mispelling.alternatives).toContain("Algorithm");
+      var misspelling = spell.misspellings[0][0];
+      expect(misspelling.alternatives).toContain("Algorithm");
 
       done();
     });
@@ -47,10 +47,10 @@ describe("When searching for spelling errors it", function() {
       var spell = orangutan.title.spelling;
 
       expect(spell.misspellingCount).toBe(1);
-      var mispelling = spell.misspellings[0][0];
-      expect(mispelling.word).toBe("Fictiive");
-      expect(mispelling.position).toBe(0);
-      expect(mispelling.alternatives.length).toBeGreaterThan(0);
+      var misspelling = spell.misspellings[0][0];
+      expect(misspelling.word).toBe("Fictiive");
+      expect(misspelling.position).toBe(0);
+      expect(misspelling.alternatives.length).toBeGreaterThan(0);
 
       done();
     });
@@ -61,8 +61,8 @@ describe("When searching for spelling errors it", function() {
       var orangutan = lipwig.find(parsedBibtex, "fictive")
             .orangutan;
       var spell = orangutan.title.spelling;
-      var mispelling = spell.misspellings[0][0];
-      expect(mispelling.alternatives).toContain("Fictive");
+      var misspelling = spell.misspellings[0][0];
+      expect(misspelling.alternatives).toContain("Fictive");
 
       done();
     });
